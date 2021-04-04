@@ -10,5 +10,7 @@ module.exports = {
   },
   rules: {
     semi: false,
+    allowJs:false,
+    experimentalDecorators:true
   },
 };
