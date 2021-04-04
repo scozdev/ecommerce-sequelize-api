@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-// import routes from './routes'
+import routes from './routes'
 import database from './config/database'
 import './sequelize';
 
@@ -12,7 +12,6 @@ const app = express()
 
 dotenv.config()
 
-import routes from './routes/product.routes';
 // ! Create Table
 // database
 //   .sync({ force: true })

@@ -1,15 +1,12 @@
 import { Router } from 'express'
-import { Product } from '../models'
+import { addProducts, getProducts, deleteProducts, updateProducts } from '../controllers/product'
+import { isAuth } from '../middlewares/auth'
+
 const router = Router()
 
-router.get('/products', (req, res, next) => {
-  Product.findAll()
-    .then((products) => {
-      res.send(products)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-})
+router.get('/', isAuth, getProducts)
+router.post('/', addProducts)
+router.put('/', updateProducts)
+router.delete('/', deleteProducts)
 
 export default router
