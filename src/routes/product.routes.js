@@ -5,8 +5,8 @@ import { isAuth } from '../middlewares/auth'
 const router = Router()
 
 router.get('/', isAuth, getProducts)
-router.post('/', addProducts)
-router.put('/', updateProducts)
-router.delete('/', deleteProducts)
+router.post('/', isAuth, addProducts)
+router.put('/', isAuth, updateProducts)
+router.delete('/', isAuth, deleteProducts)
 
 export default router
