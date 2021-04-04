@@ -13,10 +13,10 @@ const app = express()
 dotenv.config()
 
 // ! Create Table
-// database
-//   .sync({ force: true })
-//   .then((res) => console.log(res))
-//   .catch((err) => console.log(err))
+ database
+   .sync({ force: true })
+   .then((res) => console.log(res))
+   .catch((err) => console.log(err))
 
 app.use(cors())
 app.use(bodyParser.json())
