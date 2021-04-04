@@ -5,10 +5,11 @@ export const getProducts = async (req, res) => {
   res.status(200).json(products)
 }
 
-// export const getProductById = async (req, res) => {
-//   const products = await Product.findAll()
-//   res.status(200).json(products)
-// }
+export const getProductDetailById = async (req, res) => {
+  console.log(req.params.id)
+  const products = await Product.findOne({ where: { id: req.params.id } })
+  res.status(200).json(products)
+}
 
 export const addProducts = async (req, res, next) => {
   const result = await Product.create({ ...req.body, userId: 1 })

@@ -1,8 +1,8 @@
-import { Cart, CartItem, Order } from '../models'
+import { Cart, CartItem, Order, OrderItem, Product, User } from '../models'
 
 export const getMineOrders = async (req, res) => {
   console.log(req.user._id)
-  const order = await Order.findAll({ userId: req.user._id })
+  const order = await Order.findAll({ where: { userId: req.user._id }, include:[Product] })
   if (order) {
     res.status(200).json(order)
   } else {
@@ -22,12 +22,23 @@ export const getOrderById = async (req, res) => {
 export const createOrder = async (req, res) => {
   // const order = await Order.create({ ...req.body, user: req.user.id })
   // let card = await Cart.findAll({ where: { userId: req.user._id } })
-  let cardItems = await CartItem.findAll({include: Cart })
+  let user = await User.findOne({ where: { id: req.user._id }, include: [Cart] })
+  let cartItems = await user.cart.id
+  let userCartItem = await CartItem.findAll({ where: { cartId: cartItems } })
 
-  console.log(cardItems)
+  const order = await Order.create({ userId: req.user._id })
 
-  if (cardItems) {
-    res.status(200).json({ cardItems, message: 'New Order Created' })
+  userCartItem.forEach(async (cartItem) => {
+    await OrderItem.create({
+      orderId: order.id,
+      quantity: 1,
+      price: 1,
+      productId: cartItem.productId,
+    })
+  })
+
+  if (cartItems) {
+    res.status(200).json({ userCartItem, message: 'New Order Created' })
   } else {
     res.status(404).send('Order Not Fount')
   }
